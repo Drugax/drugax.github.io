@@ -1,0 +1,1090 @@
+[
+ {
+  "expressao": "οἴμοι",
+  "variantes": [
+   "οἴμοι",
+   "ὤμοι",
+   "οἴμοι μοι"
+  ],
+  "literal": "ai de mim!",
+  "sentido": "lamento ou dor; também irritação ou susto, como o nosso “ai!”, “ai, meu Deus!”, “que desgraça!”",
+  "categoria": "espanto e dor",
+  "uso": "tragédia e comédia áticas",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "οἴμοι τάλας",
+  "variantes": [
+   "οἴμοι τάλας",
+   "οἴμοι τάλαινα",
+   "οἴμοι τάλας ἐγώ"
+  ],
+  "literal": "ai de mim, infeliz!",
+  "sentido": "lamento enfático, muitas vezes cômico: “pobre de mim!”",
+  "categoria": "espanto e dor",
+  "uso": "comédia (Aristófanes) e tragédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "οἴμοι κακοδαίμων",
+  "variantes": [
+   "οἴμοι κακοδαίμων"
+  ],
+  "literal": "ai de mim, desgraçado!",
+  "sentido": "queixa exagerada da própria má sorte; tom cômico",
+  "categoria": "espanto e dor",
+  "uso": "comédia (Aristófanes)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ θεοί",
+  "variantes": [
+   "ὦ θεοί",
+   "ὦ Ζεῦ καὶ θεοί"
+  ],
+  "literal": "ó deuses!",
+  "sentido": "espanto, susto ou indignação; equivale ao nosso “ai, meu Deus!”",
+  "categoria": "espanto e dor",
+  "uso": "comédia e tragédia áticas",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ Ζεῦ",
+  "variantes": [
+   "ὦ Ζεῦ",
+   "ὦ Ζεῦ βασιλεῦ",
+   "ὦ Ζεῦ πολυτίμητε"
+  ],
+  "literal": "ó Zeus!",
+  "sentido": "espanto, indignação ou apelo aos deuses: “meu Deus!”",
+  "categoria": "espanto e dor",
+  "uso": "comédia e tragédia áticas",
+  "exemplo": "ἰοὺ ἰού· ὦ Ζεῦ βασιλεῦ, τὸ χρῆμα τῶν νυκτῶν ὅσον (Aristófanes, Nuvens 1-2)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "φεῦ",
+  "variantes": [
+   "φεῦ",
+   "φεῦ φεῦ"
+  ],
+  "literal": "ai! / ah!",
+  "sentido": "dor, pena ou também admiração: “que pena!”, “puxa!”",
+  "categoria": "espanto e dor",
+  "uso": "tragédia e prosa ática",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "παπαῖ",
+  "variantes": [
+   "παπαῖ",
+   "παπαπαπαῖ",
+   "ἀπαπαῖ"
+  ],
+  "literal": "ai! ui!",
+  "sentido": "grito de dor aguda ou de espanto",
+  "categoria": "espanto e dor",
+  "uso": "tragédia (Sófocles, Filoctetes) e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "αἰαῖ",
+  "variantes": [
+   "αἰαῖ",
+   "αἰαῖ αἰαῖ"
+  ],
+  "literal": "ai! ai!",
+  "sentido": "lamento, sobretudo fúnebre",
+  "categoria": "espanto e dor",
+  "uso": "tragédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἰώ μοι",
+  "variantes": [
+   "ἰώ μοι",
+   "ἰώ μοί μοι",
+   "ἰὼ ἰώ"
+  ],
+  "literal": "ó, ai de mim!",
+  "sentido": "grito de dor ou de desespero",
+  "categoria": "espanto e dor",
+  "uso": "tragédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ πόποι",
+  "variantes": [
+   "ὦ πόποι"
+  ],
+  "literal": "ó deuses! / ai!",
+  "sentido": "espanto, indignação ou dor diante de algo inesperado",
+  "categoria": "espanto e dor",
+  "uso": "épica homérica",
+  "exemplo": "ὦ πόποι, ἦ μέγα πένθος Ἀχαιΐδα γαῖαν ἱκάνει (Ilíada 1,254)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἰοὺ ἰού",
+  "variantes": [
+   "ἰοὺ ἰού",
+   "ἰού"
+  ],
+  "literal": "ui! ui!",
+  "sentido": "dor, aflição ou espanto (às vezes alegria)",
+  "categoria": "espanto e dor",
+  "uso": "comédia (Aristófanes)",
+  "exemplo": "ἰοὺ ἰού· ὦ Ζεῦ βασιλεῦ, τὸ χρῆμα τῶν νυκτῶν ὅσον (Aristófanes, Nuvens 1-2)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "βαβαί",
+  "variantes": [
+   "βαβαί",
+   "βαβαιάξ"
+  ],
+  "literal": "puxa! uau!",
+  "sentido": "espanto ou admiração",
+  "categoria": "espanto e dor",
+  "uso": "comédia e Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὀτοτοτοῖ",
+  "variantes": [
+   "ὀτοτοτοῖ",
+   "ὀτοτοῖ",
+   "ὀτοτοτοτοῖ"
+  ],
+  "literal": "ai! ai! ai!",
+  "sentido": "lamento intenso, quase um soluço",
+  "categoria": "espanto e dor",
+  "uso": "tragédia (Ésquilo) e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "νὴ Δία",
+  "variantes": [
+   "νὴ Δία",
+   "νὴ τὸν Δία"
+  ],
+  "literal": "sim, por Zeus!",
+  "sentido": "afirmação enfática: “claro que sim!”, “com certeza!”",
+  "categoria": "juramentos",
+  "uso": "comédia, Platão, oradores",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μὰ Δία",
+  "variantes": [
+   "μὰ Δία",
+   "μὰ τὸν Δία",
+   "οὐ μὰ Δία",
+   "οὐ μὰ τὸν Δία"
+  ],
+  "literal": "não, por Zeus!",
+  "sentido": "negação enfática (geralmente com οὐ): “de jeito nenhum!”",
+  "categoria": "juramentos",
+  "uso": "comédia, Platão, oradores",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ναὶ μὰ Δία",
+  "variantes": [
+   "ναὶ μὰ Δία",
+   "ναὶ μὰ τὸν Δία"
+  ],
+  "literal": "sim, por Zeus!",
+  "sentido": "afirmação enfática, mais rara que νὴ Δία",
+  "categoria": "juramentos",
+  "uso": "comédia e prosa ática",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "νὴ τοὺς θεούς",
+  "variantes": [
+   "νὴ τοὺς θεούς"
+  ],
+  "literal": "sim, pelos deuses!",
+  "sentido": "afirmação enfática: “juro que sim!”",
+  "categoria": "juramentos",
+  "uso": "comédia e prosa ática",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μὰ τοὺς θεούς",
+  "variantes": [
+   "μὰ τοὺς θεούς",
+   "οὐ μὰ τοὺς θεούς"
+  ],
+  "literal": "não, pelos deuses!",
+  "sentido": "negação enfática: “juro que não!”",
+  "categoria": "juramentos",
+  "uso": "comédia e prosa ática",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πρὸς θεῶν",
+  "variantes": [
+   "πρὸς θεῶν",
+   "ὦ πρὸς θεῶν",
+   "πρὸς τῶν θεῶν"
+  ],
+  "literal": "pelos deuses!",
+  "sentido": "súplica (“pelo amor dos deuses!”) ou pergunta indignada",
+  "categoria": "juramentos",
+  "uso": "tragédia, comédia, Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πρὸς Διός",
+  "variantes": [
+   "πρὸς Διός",
+   "πρὸς τοῦ Διός"
+  ],
+  "literal": "por Zeus!",
+  "sentido": "súplica ou pergunta insistente: “por favor, diz-me...”",
+  "categoria": "juramentos",
+  "uso": "prosa ática e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "νὴ τὴν Ἥραν",
+  "variantes": [
+   "νὴ τὴν Ἥραν"
+  ],
+  "literal": "por Hera!",
+  "sentido": "juramento leve, típico do Sócrates de Platão",
+  "categoria": "juramentos",
+  "uso": "Platão (Fedro, Apologia...)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μὰ τὸν κύνα",
+  "variantes": [
+   "μὰ τὸν κύνα"
+  ],
+  "literal": "pelo cão!",
+  "sentido": "juramento irônico de Sócrates, que evita nomear um deus",
+  "categoria": "juramentos",
+  "uso": "Platão",
+  "exemplo": "μὰ τὸν κύνα τὸν Αἰγυπτίων θεόν (Platão, Górgias 482b)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "νὴ τὸν Ποσειδῶ",
+  "variantes": [
+   "νὴ τὸν Ποσειδῶ"
+  ],
+  "literal": "por Posêidon!",
+  "sentido": "juramento afirmativo, frequente entre gente do campo e marinheiros",
+  "categoria": "juramentos",
+  "uso": "comédia (Aristófanes)",
+  "exemplo": "νὴ τὸν Ποσειδῶ τουτονὶ τὸν ἵππιον (Aristófanes, Nuvens 83)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "χαῖρε",
+  "variantes": [
+   "χαῖρε"
+  ],
+  "literal": "alegra-te!",
+  "sentido": "saudação ao encontrar (“olá!”, “salve!”) ou ao despedir-se (“adeus!”)",
+  "categoria": "saudações e despedidas",
+  "uso": "todas as épocas",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "χαίρετε",
+  "variantes": [
+   "χαίρετε"
+  ],
+  "literal": "alegrai-vos!",
+  "sentido": "saudação a várias pessoas: “olá a todos!” ou “adeus!”",
+  "categoria": "saudações e despedidas",
+  "uso": "todas as épocas",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "χαίρειν",
+  "variantes": [
+   "χαίρειν"
+  ],
+  "literal": "alegrar-se (= saudações)",
+  "sentido": "fórmula de abertura das cartas: “Fulano a Sicrano, saudações”",
+  "categoria": "saudações e despedidas",
+  "uso": "cartas helenísticas e Novo Testamento",
+  "exemplo": "Ἰάκωβος ... ταῖς δώδεκα φυλαῖς ταῖς ἐν τῇ διασπορᾷ χαίρειν (Tg 1,1)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἔρρωσο",
+  "variantes": [
+   "ἔρρωσο"
+  ],
+  "literal": "tem passado forte!",
+  "sentido": "despedida no fim das cartas: “passa bem!”, “adeus!”",
+  "categoria": "saudações e despedidas",
+  "uso": "cartas",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἔρρωσθε",
+  "variantes": [
+   "ἔρρωσθε"
+  ],
+  "literal": "tende passado fortes!",
+  "sentido": "despedida a várias pessoas no fim das cartas: “passai bem!”",
+  "categoria": "saudações e despedidas",
+  "uso": "cartas; Atos 15,29",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ φίλε",
+  "variantes": [
+   "ὦ φίλε"
+  ],
+  "literal": "ó amigo!",
+  "sentido": "tratamento afetuoso: “meu caro”, “meu amigo”",
+  "categoria": "saudações e despedidas",
+  "uso": "Platão e prosa ática",
+  "exemplo": "ὦ φίλε Φαῖδρε, ποῖ δὴ καὶ πόθεν; (Platão, Fedro 227a)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ ἄνδρες Ἀθηναῖοι",
+  "variantes": [
+   "ὦ ἄνδρες Ἀθηναῖοι"
+  ],
+  "literal": "ó homens atenienses!",
+  "sentido": "abertura formal de discurso à assembleia ou ao tribunal: “senhores atenienses”",
+  "categoria": "saudações e despedidas",
+  "uso": "oradores áticos e Platão",
+  "exemplo": "ὅτι μὲν ὑμεῖς, ὦ ἄνδρες Ἀθηναῖοι, πεπόνθατε ὑπὸ τῶν ἐμῶν κατηγόρων (Platão, Apologia 17a)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ ἑταῖρε",
+  "variantes": [
+   "ὦ ἑταῖρε"
+  ],
+  "literal": "ó companheiro!",
+  "sentido": "tratamento amistoso entre iguais: “meu caro”",
+  "categoria": "saudações e despedidas",
+  "uso": "Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ βέλτιστε",
+  "variantes": [
+   "ὦ βέλτιστε"
+  ],
+  "literal": "ó melhor (dos homens)!",
+  "sentido": "tratamento cortês, às vezes irônico: “meu caro senhor”",
+  "categoria": "saudações e despedidas",
+  "uso": "Platão e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ τᾶν",
+  "variantes": [
+   "ὦ τᾶν"
+  ],
+  "literal": "ó amigo!",
+  "sentido": "tratamento familiar e coloquial: “meu caro”, “ó fulano”",
+  "categoria": "saudações e despedidas",
+  "uso": "comédia e diálogo ático",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ γύναι",
+  "variantes": [
+   "ὦ γύναι"
+  ],
+  "literal": "ó mulher!",
+  "sentido": "tratamento respeitoso a uma mulher: “senhora”",
+  "categoria": "saudações e despedidas",
+  "uso": "tragédia e épica",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὦ παῖ",
+  "variantes": [
+   "ὦ παῖ"
+  ],
+  "literal": "ó menino!",
+  "sentido": "chamado a uma criança, a um filho ou a um escravo",
+  "categoria": "saudações e despedidas",
+  "uso": "tragédia e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "εὖ γε",
+  "variantes": [
+   "εὖ γε"
+  ],
+  "literal": "bem, sim!",
+  "sentido": "aprovação: “muito bem!”, “bravo!”",
+  "categoria": "concordância e diálogo",
+  "uso": "Platão e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πάνυ γε",
+  "variantes": [
+   "πάνυ γε"
+  ],
+  "literal": "inteiramente, sim",
+  "sentido": "resposta afirmativa: “certamente”, “sem dúvida”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πάνυ μὲν οὖν",
+  "variantes": [
+   "πάνυ μὲν οὖν"
+  ],
+  "literal": "inteiramente, pois",
+  "sentido": "resposta afirmativa forte: “com toda certeza”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "κομιδῇ μὲν οὖν",
+  "variantes": [
+   "κομιδῇ μὲν οὖν",
+   "κομιδῇ γε"
+  ],
+  "literal": "completamente, pois",
+  "sentido": "resposta afirmativa forte: “absolutamente”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πῶς γὰρ οὔ;",
+  "variantes": [
+   "πῶς γὰρ οὔ;",
+   "τί γὰρ οὔ;"
+  ],
+  "literal": "como pois não?",
+  "sentido": "resposta afirmativa: “claro!”, “como não?”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "τί μήν;",
+  "variantes": [
+   "τί μήν;"
+  ],
+  "literal": "o que mais?",
+  "sentido": "resposta afirmativa: “pois é claro!”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἀληθῆ λέγεις",
+  "variantes": [
+   "ἀληθῆ λέγεις",
+   "ἀληθέστατα λέγεις"
+  ],
+  "literal": "dizes coisas verdadeiras",
+  "sentido": "concordância: “é verdade”, “tens razão”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὀρθῶς λέγεις",
+  "variantes": [
+   "ὀρθῶς λέγεις"
+  ],
+  "literal": "falas corretamente",
+  "sentido": "concordância: “estás certo”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "καλῶς λέγεις",
+  "variantes": [
+   "καλῶς λέγεις",
+   "εὖ λέγεις"
+  ],
+  "literal": "falas bem",
+  "sentido": "concordância ou aprovação: “bem dito”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἔμοιγε δοκεῖ",
+  "variantes": [
+   "ἔμοιγε δοκεῖ",
+   "δοκεῖ μοι"
+  ],
+  "literal": "a mim, ao menos, parece",
+  "sentido": "concordância cautelosa: “acho que sim”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "δῆλον ὅτι",
+  "variantes": [
+   "δῆλον ὅτι",
+   "δηλονότι"
+  ],
+  "literal": "é claro que",
+  "sentido": "“evidentemente”; também como resposta: “é claro”",
+  "categoria": "concordância e diálogo",
+  "uso": "prosa ática",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὡς ἔοικε",
+  "variantes": [
+   "ὡς ἔοικε",
+   "ὡς ἔοικεν"
+  ],
+  "literal": "como parece",
+  "sentido": "concordância hesitante: “ao que parece”, “pelo visto”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὡς ἔπος εἰπεῖν",
+  "variantes": [
+   "ὡς ἔπος εἰπεῖν"
+  ],
+  "literal": "como dizer uma palavra",
+  "sentido": "atenua uma afirmação: “por assim dizer”, “praticamente”",
+  "categoria": "concordância e diálogo",
+  "uso": "Platão e prosa ática",
+  "exemplo": "οὐδὲν ὡς ἔπος εἰπεῖν ἀληθὲς εἰρήκασιν (Platão, Apologia 17a)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "οὐ δῆτα",
+  "variantes": [
+   "οὐ δῆτα"
+  ],
+  "literal": "não, certamente",
+  "sentido": "negação enfática: “de jeito nenhum”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πολλοῦ γε δεῖ",
+  "variantes": [
+   "πολλοῦ γε δεῖ",
+   "πολλοῦ γε καὶ δεῖ",
+   "πολλοῦ δεῖ"
+  ],
+  "literal": "falta muito",
+  "sentido": "negação forte: “longe disso!”",
+  "categoria": "concordância e diálogo",
+  "uso": "Platão e oradores",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μὴ γένοιτο",
+  "variantes": [
+   "μὴ γένοιτο"
+  ],
+  "literal": "que não aconteça!",
+  "sentido": "rejeição veemente: “de modo algum!”, “Deus me livre!”",
+  "categoria": "concordância e diálogo",
+  "uso": "Paulo (Romanos, Gálatas) e Epicteto",
+  "exemplo": "μὴ γένοιτο· οἵτινες ἀπεθάνομεν τῇ ἁμαρτίᾳ (Rm 6,2)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "τί δέ;",
+  "variantes": [
+   "τί δέ;"
+  ],
+  "literal": "e o quê?",
+  "sentido": "passa a um novo ponto: “e quanto a isto?”, “e então?”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "τί οὖν;",
+  "variantes": [
+   "τί οὖν;"
+  ],
+  "literal": "o que, então?",
+  "sentido": "pede a conclusão ou o próximo passo: “e daí?”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos e Paulo",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "τί φῄς;",
+  "variantes": [
+   "τί φῄς;",
+   "τί φής;"
+  ],
+  "literal": "que dizes?",
+  "sentido": "surpresa ou pedido de esclarecimento: “como assim?”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos e comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πῶς λέγεις;",
+  "variantes": [
+   "πῶς λέγεις;"
+  ],
+  "literal": "como dizes?",
+  "sentido": "pedido de explicação: “o que queres dizer?”",
+  "categoria": "concordância e diálogo",
+  "uso": "diálogos de Platão",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἄγε δή",
+  "variantes": [
+   "ἄγε δή",
+   "ἄγετε δή"
+  ],
+  "literal": "vai, pois!",
+  "sentido": "exortação: “vamos!”, “ora bem!”",
+  "categoria": "exortação e imprecação",
+  "uso": "épica, Platão, comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "φέρε δή",
+  "variantes": [
+   "φέρε δή",
+   "φέρε γάρ"
+  ],
+  "literal": "traz, pois!",
+  "sentido": "introduz um raciocínio: “vejamos”, “pois bem”",
+  "categoria": "exortação e imprecação",
+  "uso": "Platão e oradores",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "εὐφήμει",
+  "variantes": [
+   "εὐφήμει",
+   "εὐφημεῖτε"
+  ],
+  "literal": "fala bem!",
+  "sentido": "pede silêncio respeitoso ou que se evite palavra de mau agouro: “cala-te!”",
+  "categoria": "exortação e imprecação",
+  "uso": "tragédia, Platão, comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "θάρσει",
+  "variantes": [
+   "θάρσει",
+   "θάρρει",
+   "θαρσεῖτε"
+  ],
+  "literal": "tem coragem!",
+  "sentido": "encorajamento: “ânimo!”, “não tenhas medo!”",
+  "categoria": "exortação e imprecação",
+  "uso": "épica, prosa, Novo Testamento",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἐς κόρακας",
+  "variantes": [
+   "ἐς κόρακας",
+   "εἰς κόρακας",
+   "βάλλ’ ἐς κόρακας",
+   "ἄπαγ’ ἐς κόρακας"
+  ],
+  "literal": "aos corvos!",
+  "sentido": "imprecação: “vá para o inferno!”, “some daqui!”",
+  "categoria": "exortação e imprecação",
+  "uso": "comédia (Aristófanes)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "οἴμωζε",
+  "variantes": [
+   "οἴμωζε",
+   "οἰμώζετε"
+  ],
+  "literal": "geme!",
+  "sentido": "imprecação: “que te lamentes!”, “vai chorar!”",
+  "categoria": "exortação e imprecação",
+  "uso": "comédia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "γνῶθι σεαυτόν",
+  "variantes": [
+   "γνῶθι σεαυτόν"
+  ],
+  "literal": "conhece-te a ti mesmo",
+  "sentido": "reconhece os teus limites de mortal; lema de Delfos retomado por Sócrates",
+  "categoria": "máximas",
+  "uso": "inscrição do templo de Apolo em Delfos",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μηδὲν ἄγαν",
+  "variantes": [
+   "μηδὲν ἄγαν"
+  ],
+  "literal": "nada em excesso",
+  "sentido": "elogio da medida e da moderação",
+  "categoria": "máximas",
+  "uso": "inscrição do templo de Apolo em Delfos",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἐγγύα, πάρα δ’ ἄτη",
+  "variantes": [
+   "ἐγγύα, πάρα δ’ ἄτη"
+  ],
+  "literal": "dá garantia, e a ruína está ao lado",
+  "sentido": "quem se torna fiador atrai desgraça; prudência",
+  "categoria": "máximas",
+  "uso": "máxima délfica",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πάθει μάθος",
+  "variantes": [
+   "πάθει μάθος"
+  ],
+  "literal": "pelo sofrimento, o aprendizado",
+  "sentido": "o ser humano aprende sofrendo",
+  "categoria": "máximas",
+  "uso": "Ésquilo",
+  "exemplo": "τὸν πάθει μάθος θέντα κυρίως ἔχειν (Ésquilo, Agamêmnon 177)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "καιρὸν γνῶθι",
+  "variantes": [
+   "καιρὸν γνῶθι"
+  ],
+  "literal": "conhece o momento oportuno",
+  "sentido": "saber agir na hora certa",
+  "categoria": "máximas",
+  "uso": "atribuída a Pítaco (Diógenes Laércio)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μέτρον ἄριστον",
+  "variantes": [
+   "μέτρον ἄριστον"
+  ],
+  "literal": "a medida é o melhor",
+  "sentido": "elogio da moderação",
+  "categoria": "máximas",
+  "uso": "atribuída a Cleóbulo (Diógenes Laércio)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "χαλεπὰ τὰ καλά",
+  "variantes": [
+   "χαλεπὰ τὰ καλά"
+  ],
+  "literal": "difíceis são as coisas belas",
+  "sentido": "o que é nobre custa esforço",
+  "categoria": "máximas",
+  "uso": "provérbio citado por Platão (República 435c)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἀρχὴ ἥμισυ παντός",
+  "variantes": [
+   "ἀρχὴ ἥμισυ παντός",
+   "ἀρχὴ δέ τοι ἥμισυ παντός"
+  ],
+  "literal": "o começo é metade do todo",
+  "sentido": "começar é o mais difícil; “quem começa já fez metade”",
+  "categoria": "máximas",
+  "uso": "provérbio citado por Platão e Aristóteles",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὁ βίος βραχύς, ἡ δὲ τέχνη μακρή",
+  "variantes": [
+   "ὁ βίος βραχύς, ἡ δὲ τέχνη μακρή",
+   "ὁ βίος βραχύς"
+  ],
+  "literal": "a vida é curta, e a arte, longa",
+  "sentido": "a vida é breve para aprender um ofício inteiro",
+  "categoria": "máximas",
+  "uso": "Hipócrates, Aforismos 1,1",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πάντων χρημάτων μέτρον ἄνθρωπος",
+  "variantes": [
+   "πάντων χρημάτων μέτρον ἄνθρωπος",
+   "πάντων χρημάτων μέτρον ἐστὶν ἄνθρωπος"
+  ],
+  "literal": "de todas as coisas o homem é a medida",
+  "sentido": "relativismo de Protágoras",
+  "categoria": "máximas",
+  "uso": "Protágoras (citado por Platão, Teeteto 152a)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "πάντα ῥεῖ",
+  "variantes": [
+   "πάντα ῥεῖ"
+  ],
+  "literal": "tudo flui",
+  "sentido": "tudo está em mudança; fórmula tardia que resume Heráclito",
+  "categoria": "máximas",
+  "uso": "atribuída a Heráclito (fórmula posterior)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἓν οἶδα ὅτι οὐδὲν οἶδα",
+  "variantes": [
+   "ἓν οἶδα ὅτι οὐδὲν οἶδα"
+  ],
+  "literal": "uma coisa sei: que nada sei",
+  "sentido": "consciência da própria ignorância; não está literalmente em Platão",
+  "categoria": "máximas",
+  "uso": "atribuída a Sócrates (tradição posterior)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἀμὴν λέγω ὑμῖν",
+  "variantes": [
+   "ἀμὴν λέγω ὑμῖν",
+   "ἀμὴν γὰρ λέγω ὑμῖν",
+   "ἀμὴν λέγω σοι"
+  ],
+  "literal": "amém, digo-vos",
+  "sentido": "introduz uma afirmação solene: “em verdade vos digo”",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos sinóticos",
+  "exemplo": "ἀμὴν γὰρ λέγω ὑμῖν (Mt 5,18)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἀμὴν ἀμὴν λέγω ὑμῖν",
+  "variantes": [
+   "ἀμὴν ἀμὴν λέγω ὑμῖν",
+   "ἀμὴν ἀμὴν λέγω σοι"
+  ],
+  "literal": "amém, amém, digo-vos",
+  "sentido": "fórmula solene dupla: “em verdade, em verdade vos digo”",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelho de João",
+  "exemplo": "ἀμὴν ἀμὴν λέγω ὑμῖν (Jo 1,51)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "καὶ ἐγένετο",
+  "variantes": [
+   "καὶ ἐγένετο",
+   "ἐγένετο δέ"
+  ],
+  "literal": "e aconteceu",
+  "sentido": "fórmula narrativa de transição: “e sucedeu que”",
+  "categoria": "Novo Testamento",
+  "uso": "Lucas e Septuaginta",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "εἰρήνη ὑμῖν",
+  "variantes": [
+   "εἰρήνη ὑμῖν"
+  ],
+  "literal": "paz a vós",
+  "sentido": "saudação semítica: “a paz esteja convosco”",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos (Lc 24,36; Jo 20,19)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "χάρις ὑμῖν καὶ εἰρήνη",
+  "variantes": [
+   "χάρις ὑμῖν καὶ εἰρήνη"
+  ],
+  "literal": "graça a vós e paz",
+  "sentido": "saudação de abertura das cartas de Paulo",
+  "categoria": "Novo Testamento",
+  "uso": "cartas de Paulo",
+  "exemplo": "χάρις ὑμῖν καὶ εἰρήνη ἀπὸ θεοῦ πατρὸς ἡμῶν (Rm 1,7)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὁ ἔχων ὦτα ἀκουέτω",
+  "variantes": [
+   "ὁ ἔχων ὦτα ἀκουέτω",
+   "ὁ ἔχων ὦτα ἀκούειν ἀκουέτω"
+  ],
+  "literal": "quem tem ouvidos, ouça",
+  "sentido": "chamado a prestar atenção e entender",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos (Mt 11,15)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "οὐαὶ ὑμῖν",
+  "variantes": [
+   "οὐαὶ ὑμῖν"
+  ],
+  "literal": "ai de vós",
+  "sentido": "lamento ou ameaça profética",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos (Mt 23,13)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μὴ φοβοῦ",
+  "variantes": [
+   "μὴ φοβοῦ",
+   "μὴ φοβεῖσθε"
+  ],
+  "literal": "não temas",
+  "sentido": "palavra de encorajamento: “não tenhas medo”",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos",
+  "exemplo": "μὴ φοβοῦ, Μαριάμ (Lc 1,30)",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "κύριε ἐλέησον",
+  "variantes": [
+   "κύριε ἐλέησον",
+   "ἐλέησον ἡμᾶς"
+  ],
+  "literal": "Senhor, tem piedade",
+  "sentido": "súplica; depois, fórmula litúrgica",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos e liturgia",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ὡσαννά",
+  "variantes": [
+   "ὡσαννά"
+  ],
+  "literal": "hosana (salva, por favor!)",
+  "sentido": "aclamação de louvor, do hebraico",
+  "categoria": "Novo Testamento",
+  "uso": "Evangelhos (Mc 11,9)",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἀλληλουϊά",
+  "variantes": [
+   "ἀλληλουϊά"
+  ],
+  "literal": "aleluia (louvai a Deus)",
+  "sentido": "aclamação de louvor, do hebraico",
+  "categoria": "Novo Testamento",
+  "uso": "Apocalipse 19,1",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "μαράνα θά",
+  "variantes": [
+   "μαράνα θά",
+   "μαρὰν ἀθά"
+  ],
+  "literal": "Senhor nosso, vem!",
+  "sentido": "invocação aramaica",
+  "categoria": "Novo Testamento",
+  "uso": "1 Coríntios 16,22",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ },
+ {
+  "expressao": "ἀββα ὁ πατήρ",
+  "variantes": [
+   "ἀββα ὁ πατήρ"
+  ],
+  "literal": "abbá, ó Pai",
+  "sentido": "invocação filial a Deus (abbá é aramaico)",
+  "categoria": "Novo Testamento",
+  "uso": "Marcos 14,36; Romanos 8,15",
+  "exemplo": "",
+  "fonte": "base (gerado, revisar)"
+ }
+]

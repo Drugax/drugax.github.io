@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Ploion</title>
+<meta name="description" content="Ploion: teclado politônico e dicionário de grego antigo.">
+<meta name="theme-color" content="#1b3a5c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icones/favicon-32.png">
+<link rel="apple-touch-icon" href="icones/apple-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ploion">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="topo">
+    <div class="marca"><img src="icones/icone-192.png" alt=""><span>Ploion</span></div>
+    <button class="feijoada" id="b-apoio" type="button"><span class="coracao">♥</span><span class="rotulo" data-t="Me pague uma feijoada!"></span></button>
+    <button class="icone-botao" id="b-menu" type="button" aria-label="Menu">☰</button>
+  </header>
+
+  <main class="corpo">
+    <section class="escrita">
+      <div class="ferramentas">
+        <button type="button" id="b-copiar"><img src="icones/copiar.png" alt=""><span data-t="Copiar tudo"></span></button>
+        <button type="button" id="b-limpar"><img src="icones/limpar.png" alt=""><span data-t="Limpar"></span></button>
+        <span class="espaco"></span>
+        <button type="button" id="b-teclado" aria-pressed="true"><img src="icones/teclado.png" alt=""><span data-t="Teclado virtual"></span></button>
+      </div>
+      <textarea id="texto" class="grego" dir="ltr" spellcheck="false" autocomplete="off"
+                autocorrect="off" autocapitalize="off" lang="grc"></textarea>
+      <div class="rapido" id="rapido" hidden>
+        <span class="r-lema grego" dir="ltr"></span><span class="r-translit"></span><span class="r-sig"></span>
+        <button type="button" id="b-rapido-ver" data-t="Ver no dicionário"></button>
+      </div>
+      <div class="teclado" id="teclado" dir="ltr"></div>
+    </section>
+
+    <section class="paineis">
+      <nav class="abas" role="tablist">
+        <button role="tab" data-aba="translit"><img src="icones/translit.png" alt=""><span data-t="Transliteração"></span></button>
+        <button role="tab" data-aba="traducao"><img src="icones/traducao.png" alt=""><span data-t="Tradução"></span></button>
+        <button role="tab" data-aba="dicionario"><img src="icones/dicionario.png" alt=""><span data-t="Dicionário"></span></button>
+        <button role="tab" data-aba="expressoes"><img src="icones/expressoes.png" alt=""><span data-t="Expressões comuns"></span></button>
+        <button role="tab" data-aba="quadro"><img src="icones/quadro.png" alt=""><span data-t="Quadro de caracteres"></span></button>
+      </nav>
+
+      <div class="painel" id="p-translit" role="tabpanel">
+        <div class="saida translit" id="saida-translit"></div>
+      </div>
+
+      <div class="painel" id="p-traducao" role="tabpanel" hidden>
+        <div class="saida glosa" id="saida-glosa"></div>
+        <p class="nota" data-t="A tradução com IA, por enquanto, está só na versão para Windows."></p>
+      </div>
+
+      <div class="painel" id="p-dicionario" role="tabpanel" hidden>
+        <h3 class="titulo-painel" data-t="Dicionário grego → português"></h3>
+        <div class="busca">
+          <input id="busca" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <p class="status" id="status-dic"></p>
+        <div class="dic-corpo">
+          <ul class="resultados" id="resultados"></ul>
+          <article class="verbete" id="verbete"></article>
+        </div>
+        <div class="acoes-dic">
+          <button type="button" id="b-novo" data-t="Adicionar verbete"></button>
+          <button type="button" id="b-editar" data-t="Editar verbete" disabled></button>
+        </div>
+        <p class="nota" data-t="Os seus verbetes ficam guardados só neste navegador."></p>
+      </div>
+
+      <div class="painel" id="p-expressoes" role="tabpanel" hidden>
+        <div class="busca"><input id="filtro-expr" type="search" autocomplete="off" spellcheck="false"></div>
+        <p class="status" id="status-expr"></p>
+        <div id="lista-expr" class="lista-expr"></div>
+      </div>
+
+      <div class="painel" id="p-quadro" role="tabpanel" hidden>
+        <div id="quadro"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- menu -->
+<dialog id="d-menu" class="folha">
+  <div class="folha-topo"><h2>Ploion</h2><button type="button" class="fechar" data-fechar>✕</button></div>
+  <label class="linha-op"><img src="icones/idioma.png" alt=""><span data-t="Idioma:"></span>
+    <select id="sel-idioma"></select></label>
+  <label class="linha-op"><img src="icones/teclado.png" alt=""><span data-t="Teclado virtual"></span>
+    <input type="checkbox" id="op-teclado" class="chave"></label>
+  <label class="linha-op"><img src="icones/beta.png" alt=""><span data-t="Teclado do aparelho em Beta Code"></span>
+    <input type="checkbox" id="op-beta" class="chave"></label>
+  <label class="linha-op"><img src="icones/sigma.png" alt=""><span data-t="σ → ς automático"></span>
+    <input type="checkbox" id="op-sigma" class="chave"></label>
+  <label class="linha-op"><img src="icones/escuro.png" alt=""><span data-t="Tema escuro"></span>
+    <input type="checkbox" id="op-escuro" class="chave"></label>
+  <div class="linha-op"><img src="icones/tamanho.png" alt=""><span data-t="Tamanho da letra:"></span>
+    <span class="tamanhos"><button type="button" id="b-menor">A−</button><button type="button" id="b-maior">A+</button></span></div>
+  <div class="menu-botoes">
+    <button type="button" id="b-instalar" hidden><span data-t="Instalar o Ploion"></span></button>
+    <p class="nota" id="dica-instalar" hidden data-t="Para instalar: no Android, menu ⋮ → “Instalar app”; no iPhone, Compartilhar → “Adicionar à Tela de Início”."></p>
+    <button type="button" id="b-sobre"><img src="icones/sobre.png" alt=""><span class="t-sobre"></span></button>
+    <button type="button" id="b-apoio2"><span class="coracao">♥</span><span data-t="Apoie o Ploion"></span></button>
+  </div>
+</dialog>
+
+<!-- sobre -->
+<dialog id="d-sobre" class="folha">
+  <div class="folha-topo"><h2 class="t-sobre"></h2><button type="button" class="fechar" data-fechar>✕</button></div>
+  <div class="sobre">
+    <img class="navio" src="icones/navio.png" alt="">
+    <p class="nome-grego">Πλοῖον</p>
+    <p class="versao" id="versao"></p>
+    <p id="sobre-descricao"></p>
+    <p class="navio-frase" id="sobre-navio"></p>
+    <p data-t="O dicionário e as expressões incluídos foram gerados como ponto de partida e devem ser revisados."></p>
+    <p><b id="sobre-autor"></b></p>
+    <p data-t="Meus sinceros agradecimentos à Universidade de São Paulo, à Faculdade de Filosofia, Letras e Ciências Humanas (FFLCH) e ao Prof. Dr. André Malta Campos."></p>
+    <p class="miudo" data-t="Desenvolvido com o auxílio do Claude, inteligência artificial da Anthropic."></p>
+    <p class="miudo"><span id="sobre-copy"></span> · <a href="../privacidade.html" target="_blank" rel="noopener">Privacidade · Privacy</a></p>
+  </div>
+</dialog>
+
+<!-- apoio -->
+<dialog id="d-apoio" class="folha">
+  <div class="folha-topo"><h2 data-t="Apoie o Ploion"></h2><button type="button" class="fechar" data-fechar>✕</button></div>
+  <div class="apoio">
+    <img class="navio pequeno" src="icones/navio.png" alt="">
+    <div id="texto-apoio"></div>
+    <div class="formas">
+      <div class="forma">
+        <h3 data-t="Ko-fi (fora do Brasil)"></h3>
+        <a class="botao-kofi" href="https://ko-fi.com/doug798063" target="_blank" rel="noopener" data-t="Abrir o Ko-fi ♥"></a>
+      </div>
+      <div class="forma">
+        <h3 data-t="Pix (no Brasil)"></h3>
+        <img class="qr" src="icones/pix_qrcode.png" alt="QR Pix">
+        <button type="button" id="b-pix" data-t="Copiar o Pix copia e cola"></button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- verbete pessoal -->
+<dialog id="d-verbete" class="folha">
+  <form method="dialog" id="f-verbete">
+    <div class="folha-topo"><h2 id="t-verbete"></h2><button type="button" class="fechar" data-fechar>✕</button></div>
+    <label><span data-t="Lema (grego):"></span>
+      <span class="com-botao"><input id="v-lema" class="grego" dir="ltr" autocomplete="off" spellcheck="false">
+      <button type="button" id="b-v-beta" data-t="Beta Code → grego"></button></span></label>
+    <label><span data-t="Gramática:"></span><input id="v-gram" class="grego" dir="ltr" autocomplete="off"></label>
+    <label><span data-t="Classe:"></span><input id="v-classe" autocomplete="off"></label>
+    <label><span class="t-sig"></span><textarea id="v-sig" rows="4"></textarea></label>
+    <label><span class="t-ex"></span><input id="v-ex" class="grego" dir="ltr" autocomplete="off"></label>
+    <div class="form-botoes">
+      <button type="button" id="b-v-excluir" class="perigo" data-t="Excluir"></button>
+      <span class="espaco"></span>
+      <button type="button" data-fechar data-t="Cancelar"></button>
+      <button type="submit" id="b-v-salvar" class="principal" data-t="Salvar"></button>
+    </div>
+  </form>
+</dialog>
+
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script src="nucleo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
