@@ -21,6 +21,9 @@
   var LINK_LOJA = "";
   var LINK_KOFI = "https://ko-fi.com/doug798063";
   var EMAIL = "ploion.app@outlook.com";
+  /* LINK_EXE: download direto do programa para Windows. Vazio = descobre sozinho a partir
+     do endereço do site (usuario.github.io -> Releases do repositório usuario.github.io). */
+  var LINK_EXE = "";
 </script>
 <style>
 @font-face { font-family: "Cardo"; src: url("fontes/cardo-regular.woff") format("woff"); font-weight: 400; font-display: swap; }
@@ -247,11 +250,19 @@ footer p { margin: 4px 0; }
 
 <section class="apoio" id="celular" style="background:var(--papiro)">
   <div class="envolve">
-    <h2><span lang="pt">No celular, no tablet e no navegador</span><span lang="en">On your phone, tablet and browser</span></h2>
+    <h2><span lang="pt">No computador, no celular e no navegador</span><span lang="en">On your computer, phone and browser</span></h2>
     <hr class="ornamento">
     <p class="sub"><span lang="pt">A versão web funciona em qualquer aparelho e pode ser instalada como um aplicativo, com ícone próprio e sem precisar de internet depois.</span>
       <span lang="en">The web version works on any device and can be installed like an app, with its own icon and no internet needed afterwards.</span></p>
-    <div class="caixas">
+    <div class="caixas" style="max-width:1040px">
+      <div class="cartao" id="cartao-exe">
+        <h3>Windows</h3>
+        <p><span lang="pt">Pela Microsoft Store (recomendado, atualiza sozinho) ou baixando o programa direto:</span>
+           <span lang="en">From the Microsoft Store (recommended, updates itself) or by downloading the program directly:</span></p>
+        <p style="margin-top:12px"><a class="botao principal" id="botao-exe" href="#"><span lang="pt">Baixar o Ploion.exe</span><span lang="en">Download Ploion.exe</span></a></p>
+        <p style="font-size:14px;margin-top:10px"><span lang="pt">Se o Windows mostrar “O Windows protegeu o computador”, clique em <b>Mais informações → Executar assim mesmo</b>. O aviso aparece porque o programa é novo e ainda não tem assinatura digital.</span>
+           <span lang="en">If Windows shows “Windows protected your PC”, click <b>More info → Run anyway</b>. The warning appears because the program is new and not yet digitally signed.</span></p>
+      </div>
       <div class="cartao">
         <h3>Android</h3>
         <p><span lang="pt">Abra o Ploion no Chrome, toque no menu ⋮ e em <b>“Instalar app”</b>.</span>
@@ -369,6 +380,13 @@ footer p { margin: 4px 0; }
   usar(guardado || ((navigator.language || "pt").toLowerCase().indexOf("pt") === 0 ? "pt" : "en"));
 
   document.getElementById("botao-kofi").href = LINK_KOFI;
+  var exe = LINK_EXE, host = location.hostname;
+  if (!exe && /\.github\.io$/.test(host)) {
+    var usuario = host.replace(/\.github\.io$/, "");
+    exe = "https://github.com/" + usuario + "/" + host + "/releases/latest/download/Ploion.exe";
+  }
+  if (exe) document.getElementById("botao-exe").href = exe;
+  else document.getElementById("cartao-exe").remove();
   var em = document.getElementById("link-email");
   em.href = "mailto:" + EMAIL; em.textContent = EMAIL;
 
