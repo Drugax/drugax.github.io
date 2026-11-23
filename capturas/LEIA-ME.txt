@@ -1,0 +1,7 @@
+Coloque aqui as capturas de tela do Ploion, com estes nomes exatos:
+  captura1.png  - texto, transliteração e tradução
+  captura2.png  - dicionário
+  captura3.png  - quadro de caracteres
+  captura4.png  - tema escuro
+  captura5.png  - tutorial
+As que faltarem simplesmente não aparecem no site.
