@@ -382,8 +382,11 @@ footer p { margin: 4px 0; }
   document.getElementById("botao-kofi").href = LINK_KOFI;
   var exe = LINK_EXE, host = location.hostname;
   if (!exe && /\.github\.io$/.test(host)) {
+    // usuario.github.io (repositório usuario.github.io) ou usuario.github.io/repositorio/
     var usuario = host.replace(/\.github\.io$/, "");
-    exe = "https://github.com/" + usuario + "/" + host + "/releases/latest/download/Ploion.exe";
+    var pasta = location.pathname.split("/").filter(Boolean)[0];
+    var repo = pasta && !/\.html?$/.test(pasta) && pasta !== "app" ? pasta : host;
+    exe = "https://github.com/" + usuario + "/" + repo + "/releases/latest/download/Ploion.exe";
   }
   if (exe) document.getElementById("botao-exe").href = exe;
   else document.getElementById("cartao-exe").remove();
