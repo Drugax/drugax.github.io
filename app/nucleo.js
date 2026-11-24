@@ -325,6 +325,7 @@
     if (Array.isArray(v.formas))
       novo.formas = v.formas.map(function (f) { return nfc(String(f)); })
                             .filter(function (f) { return f.trim(); });
+    if (v.em_ingles) novo.em_ingles = true;
     return novo;
   }
   function ehMeu(v) { return (v.fonte || "").startsWith("meu"); }
@@ -341,8 +342,69 @@
     return 0;
   }
 
-  function Dicionario(base, pessoais, idioma) {
+  // ------------------------------------------------ formas flexionadas
+  // formas_flexionadas.json (opcional), gerado por lexicos/importar_formas.py
+  var ROTULO_FLEXAO = {
+    "present": "presente", "imperfect": "imperfeito", "future": "futuro",
+    "aorist": "aoristo", "perfect": "perfeito", "pluperfect": "mais-que-perfeito",
+    "future-perfect": "futuro perfeito",
+    "indicative": "indicativo", "subjunctive": "subjuntivo", "optative": "optativo",
+    "imperative": "imperativo", "infinitive": "infinitivo", "participle": "particípio",
+    "active": "ativo", "middle": "médio", "passive": "passivo", "mediopassive": "médio-passivo",
+    "nominative": "nominativo", "genitive": "genitivo", "dative": "dativo",
+    "accusative": "acusativo", "vocative": "vocativo",
+    "masculine": "masculino", "feminine": "feminino", "neuter": "neutro",
+    "first-person": "1ª pessoa", "second-person": "2ª pessoa", "third-person": "3ª pessoa",
+    "singular": "singular", "dual": "dual", "plural": "plural",
+    "comparative": "comparativo", "superlative": "superlativo",
+    "Attic": "ático", "Epic": "épico", "Homeric": "homérico", "Ionic": "jônico",
+    "Doric": "dórico", "Aeolic": "eólico", "Koine": "coiné", "poetic": "poético"
+  };
+  function chaveFlexao(p) {
+    var d = String(p).trim().toLowerCase().normalize("NFD");
+    d = d.replace(/[\u0304\u0306]/g, "").replace(/\u0300/g, "\u0301");
+    return d.normalize("NFC");
+  }
+  function descreverAnalise(etiquetas, tr) {
+    tr = tr || function (t) { return t; };
+    return etiquetas.split(" ").filter(function (t) { return ROTULO_FLEXAO.hasOwnProperty(t); })
+      .map(function (t) { return tr(ROTULO_FLEXAO[t]); }).join(" ");
+  }
+  function Flexoes(dados) {
+    var ok = dados && typeof dados === "object";
+    this.analises = ok && Array.isArray(dados.analises) ? dados.analises.slice() : [];
+    var exato = this._exato = new Map(), chave = this._chave = new Map();
+    ((ok && dados.lemas) || []).forEach(function (item) {
+      if (!Array.isArray(item) || item.length < 2) return;
+      var lema = item[0];
+      for (var i = 1; i < item.length; i++) {
+        var txt = String(item[i]), b = txt.indexOf("|");
+        var reg = [b < 0 ? txt : txt.slice(0, b), lema, b < 0 ? "" : txt.slice(b + 1)];
+        var l = exato.get(reg[0]); if (l) l.push(reg); else exato.set(reg[0], [reg]);
+        var k = chaveGrega(reg[0]);
+        l = chave.get(k); if (l) l.push(reg); else chave.set(k, [reg]);
+      }
+    });
+  }
+  Flexoes.prototype.exatas = function (p) { return this._exato.get(chaveFlexao(p)) || []; };
+  Flexoes.prototype.semAcentos = function (p) { return this._chave.get(chaveGrega(p)) || []; };
+  Flexoes.prototype.descrever = function (ids, tr) {
+    var self = this, vistos = new Set(), saida = [];
+    String(ids).split(",").forEach(function (i) {
+      if (!/^\d+$/.test(i) || +i >= self.analises.length) return;
+      var t = descreverAnalise(self.analises[+i], tr);
+      if (t && !vistos.has(t)) { vistos.add(t); saida.push(t); }
+    });
+    return saida.join(" / ");
+  };
+  function ordemFonte(v) {
+    var f = v.fonte || "";
+    return f.indexOf("Dodson") >= 0 ? 1 : f.indexOf("Middle Liddell") >= 0 ? 2 : 0;
+  }
+
+  function Dicionario(base, pessoais, idioma, flexoes) {
     this.idioma = idioma || "pt";
+    this.flexoes = flexoes || null;
     this.base = (base || []).map(function (v) { return prepararVerbete(v); }).filter(Boolean);
     this.pessoais = (pessoais || []).map(function (v) { return prepararVerbete(v, "meu"); })
                                     .filter(Boolean);
@@ -357,6 +419,7 @@
     lista.sort(function (p, q) { return p[0] < q[0] ? -1 : p[0] > q[0] ? 1 : 0; });
     this.verbetes = lista.map(function (p) { return p[1]; });
     this._idx = []; this._formas = new Map(); this._porGrega = new Map(); this._porLatina = new Map();
+    this._porLema = porLema;
     var self = this;
     function por(mapa, k, v) { if (!mapa.has(k)) mapa.set(k, []); mapa.get(k).push(v); }
     this.verbetes.forEach(function (v) {
@@ -383,6 +446,13 @@
     kgs.forEach(function (kg) {
       (self._formas.get(kg) || []).forEach(function (v) { marcar(v, [0, 0, 0], { forma_de: v.lema }); });
     });
+    if (this.flexoes && kgs.length) {   // formas flexionadas (ἔλυσα -> λύω)
+      var achadas = temGrego(q) ? this.flexionadas(q, true) : [];
+      if (!achadas.length) achadas = this.flexionadas(kgs[0], false);
+      achadas.slice(0, 12).forEach(function (a) {
+        marcar(a[0], [0, 0, 0], { forma: a[1], ids: a[2] });
+      });
+    }
     this._idx.forEach(function (e) {
       var v = e[0], vkg = e[1], vkl = e[2], vkp = e[3];
       kgs.forEach(function (kg) {
@@ -432,8 +502,34 @@
       var fs = formas[i].formas || [];
       if (fs.indexOf(p) >= 0 || fs.indexOf(p.toLowerCase()) >= 0) return formas[i];
     }
+    var flex = this.flexionadas(p, true);
+    if (flex.length) return flex[0][0];
     if (formas.length) return formas[0];
-    return mesmos.length ? mesmos[0] : null;
+    if (mesmos.length) return mesmos[0];
+    flex = this.flexionadas(p, false);
+    return flex.length ? flex[0][0] : null;
+  };
+  Dicionario.prototype.flexionadas = function (p, exatas) {
+    if (!this.flexoes) return [];
+    var regs = exatas ? this.flexoes.exatas(p) : this.flexoes.semAcentos(p);
+    var saida = [], vistos = new Set(), self = this;
+    regs.forEach(function (r) {
+      var v = self._porLema.get(r[1]);
+      if (!v || vistos.has(r[1] + "\u0000" + r[0])) return;
+      vistos.add(r[1] + "\u0000" + r[0]);
+      saida.push([v, r[0], r[2]]);
+    });
+    return saida.map(function (x, i) { return [x, i]; }).sort(function (a, b) {
+      return ordemFonte(a[0][0]) - ordemFonte(b[0][0]) || a[1] - b[1];
+    }).map(function (x) { return x[0]; });
+  };
+  Dicionario.prototype.analise = function (p, v, tr) {
+    if (!this.flexoes || !v) return "";
+    for (var e = 0; e < 2; e++) {
+      var l = this.flexionadas(p, e === 0);
+      for (var i = 0; i < l.length; i++) if (l[i][0] === v) return this.flexoes.descrever(l[i][2], tr);
+    }
+    return "";
   };
   Dicionario.prototype.sugerir = function (kg, kl, n) {
     n = n || 8;
@@ -647,7 +743,8 @@
     Dicionario: Dicionario, palavrasComPosicao: palavrasComPosicao, IndiceExpressoes: IndiceExpressoes,
     acharExpressoes: acharExpressoes, filtrarExpressoes: filtrarExpressoes,
     resumirSignificado: resumirSignificado, glosaAproximada: glosaAproximada,
-    formaDoQuadro: formaDoQuadro
+    formaDoQuadro: formaDoQuadro, Flexoes: Flexoes, ROTULO_FLEXAO: ROTULO_FLEXAO,
+    chaveFlexao: chaveFlexao, descreverAnalise: descreverAnalise
   };
   if (typeof module !== "undefined" && module.exports) module.exports = nucleo;
   else raiz.PloionNucleo = nucleo;

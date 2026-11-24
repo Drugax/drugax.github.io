@@ -1,0 +1,29 @@
+Dicionário do Ploion — fontes e licenças
+=========================================
+
+O arquivo dicionario_grego.json reúne três fontes:
+
+1. Verbetes originais do Ploion (fonte: "base").
+
+2. Middle Liddell — Henry George Liddell e Robert Scott, An Intermediate
+   Greek-English Lexicon (Oxford, Clarendon Press, 1889). Texto digital:
+   Text provided by Perseus Digital Library, with funding from The Annenberg
+   CPB/Project. Original version available for viewing and download at
+   http://www.perseus.tufts.edu/hopper/.
+   Licença: Creative Commons Atribuição-CompartilhaIgual 3.0 (CC BY-SA 3.0).
+   Os verbetes derivados dele (fonte: "Middle Liddell") são distribuídos sob a
+   mesma licença.
+
+3. Léxico do Novo Testamento de Jeff Dodson (fonte: "Dodson") — domínio público.
+   As traduções para o português dos sentidos do Dodson foram feitas para o Ploion.
+
+As traduções para o português dos verbetes do Middle Liddell foram feitas para o
+Ploion e seguem a licença do original (CC BY-SA 3.0).
+
+Formas flexionadas (arquivo formas_flexionadas.json, quando presente): tiradas do
+Wiktionary em inglês (https://en.wiktionary.org), por meio dos dados extraídos pelo
+Wiktextract (https://kaikki.org). Licença: Creative Commons
+Atribuição-CompartilhaIgual 4.0 (CC BY-SA 4.0). O arquivo é gerado por
+lexicos/importar_formas.py e distribuído sob a mesma licença.
+
+O Ploion é gratuito e sem fins comerciais.

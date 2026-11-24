@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var N = window.PloionNucleo;
-  var VERSAO = "2.5.1";
+  var VERSAO = "2.7";
   var IDIOMAS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["fr", "Français"],
     ["de", "Deutsch"], ["it", "Italiano"], ["ru", "Русский"], ["zh", "中文"], ["ar", "العربية"],
     ["el", "Ελληνικά"], ["ja", "日本語"], ["ko", "한국어"]];
@@ -67,8 +67,18 @@
       .catch(function () { trad = { interface: {}, dados: {} }; });
   }
   function traduzirVerbete(v) {
-    var n = Object.assign({}, v);
-    if (Array.isArray(v.significados)) n.significados = v.significados.map(td);
+    var n = Object.assign({}, v), cod = cfg.idioma;
+    if (Array.isArray(v.significados)) {
+      // verbetes do Middle Liddell/Dodson guardam o inglês: sem tradução, mostra o inglês
+      var en = v.significados_en || [], emIngles = !!v.traducao_pendente;
+      n.significados = v.significados.map(function (s, i) {
+        var t = td(s);
+        if (t === s && en.length && cod !== "pt" && i < en.length) { emIngles = true; return en[i]; }
+        return t;
+      });
+      delete n.significados_en; delete n.traducao_pendente;
+      if (emIngles && cod !== "en") n.em_ingles = true;
+    }
     ["classe", "gram", "exemplo"].forEach(function (c) { if (typeof v[c] === "string") n[c] = td(v[c]); });
     if (typeof v.fonte === "string" && v.fonte.indexOf("meu") !== 0) n.fonte = td(v.fonte);
     return n;
@@ -80,8 +90,9 @@
     });
     return n;
   }
+  var flexoes = null;  // formas flexionadas (ἔλυσα -> λύω), carregadas depois do resto
   function montarDados() {
-    dic = new N.Dicionario(base.map(traduzirVerbete), meusVerbetes(), cfg.idioma);
+    dic = new N.Dicionario(base.map(traduzirVerbete), meusVerbetes(), cfg.idioma, flexoes);
     indice = new N.IndiceExpressoes(exprBruta.map(traduzirExpressao));
   }
   function aplicarTextos() {
@@ -347,7 +358,11 @@
       var sp = document.createElement("span");
       sp.textContent = s;
       if (o.expressao) { sp.className = "expr"; sp.title = o.grego; sp.onclick = function () { abrirExpressao(o.expressao); }; }
-      else if (o.verbete) { sp.className = "pal"; sp.title = o.grego; sp.onclick = function () { abrirVerbete(o.verbete); }; }
+      else if (o.verbete) {
+        var an = dic.analise(o.grego, o.verbete, _);
+        sp.className = "pal"; sp.title = o.grego + (an ? " → " + o.verbete.lema + ": " + an : "");
+        sp.onclick = function () { abrirVerbete(o.verbete); };
+      }
       else sp.className = "desc";
       g.appendChild(sp);
     });
@@ -414,7 +429,13 @@
     var li = document.createElement("li");
     li.textContent = v.lema;
     var sm = document.createElement("small");
-    sm.textContent = (nota && nota.forma_de ? fmt(_("(forma de {lema})"), { lema: nota.forma_de }) + " " : "") + v.significados[0];
+    var pre = "";
+    if (nota && nota.forma_de) pre = fmt(_("(forma de {lema})"), { lema: nota.forma_de }) + " ";
+    else if (nota && nota.forma) {
+      var an = flexoes ? flexoes.descrever(nota.ids, _) : "";
+      pre = "(" + nota.forma + (an ? ": " + an : "") + ") ";
+    }
+    sm.textContent = pre + v.significados[0];
     li.appendChild(sm);
     li.onclick = function () { mostrarVerbete(v); };
     li._v = v;
@@ -434,6 +455,7 @@
     var ol = el("ol"); v.significados.forEach(function (s) { var li = document.createElement("li"); li.textContent = s; ol.appendChild(li); });
     if (v.exemplo) { var p = el("p"); p.innerHTML = ""; var r = document.createElement("span"); r.className = "rot"; r.textContent = _("\nExemplo: ").trim() + " "; p.appendChild(r); var gg = document.createElement("span"); gg.className = "grego"; gg.textContent = v.exemplo; p.appendChild(gg); }
     if (v.formas && v.formas.length) { var p2 = el("p"); var r2 = document.createElement("span"); r2.className = "rot"; r2.textContent = _("\nFormas que levam a este verbete: ").trim() + " "; p2.appendChild(r2); var g2 = document.createElement("span"); g2.className = "grego"; g2.textContent = v.formas.join(", "); p2.appendChild(g2); }
+    if (v.em_ingles) el("div", "fonte", _("\nSignificados em inglês (tradução em andamento).").trim());
     el("div", "fonte", fmt(_("\nFonte: {fonte}"), { fonte: v.fonte }).trim());
   }
   function abrirVerbete(v) {
@@ -638,6 +660,19 @@
     });
   }
 
+  function carregarFlexoes() {  // arquivo opcional: sem ele, o app funciona como antes
+    fetch("dados/formas_flexionadas.json").then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    }).then(function (d) {
+      if (!d || !d.lemas || !d.lemas.length) return;  // arquivo vazio: ainda não gerado
+      flexoes = new N.Flexoes(d);
+      if (dic) dic.flexoes = flexoes;
+      $("credito-formas").hidden = false;
+      aoMudar();
+    }).catch(function () {});
+  }
+
   // ------------------------------------------------------------ início
   cfg.idioma = idiomaInicial();
   aplicarTema(); aplicarTamanho(); aplicarModoTeclado();
@@ -652,6 +687,7 @@
     aoMudar(); atualizarPaineis(); buscar(); mostrarAba(cfg.aba);
     if (!toque) ta.focus();
     document.documentElement.classList.add("pronto");
+    carregarFlexoes();
   }).catch(function (e) {
     avisar("Não consegui carregar os dados do Ploion. Verifique a conexão e recarregue a página.", true, 15000);
     console.error(e);
