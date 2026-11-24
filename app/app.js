@@ -388,7 +388,8 @@
     rapidoVerbete = v;
     r.querySelector(".r-lema").textContent = v.lema;
     r.querySelector(".r-translit").textContent = N.transliterar(v.lema);
-    r.querySelector(".r-sig").textContent = "— " + v.significados.join("; ");
+    var an = N.chaveGrega(p) !== N.chaveGrega(v.lema) ? dic.analise(p, v, _) : "";
+    r.querySelector(".r-sig").textContent = "— " + (an ? "(" + p + ": " + an + ") " : "") + v.significados.join("; ");
     r.hidden = false;
   }
   ["click", "keyup", "select"].forEach(function (ev) { ta.addEventListener(ev, atualizarRapido); });

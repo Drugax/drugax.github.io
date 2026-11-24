@@ -1,6 +1,6 @@
 /* Ploion — service worker: guarda o app no aparelho para funcionar sem internet.
    A versão muda sozinha quando qualquer arquivo muda (gerada por montar_sw.py). */
-var VERSAO = "ploion-c54401354b";
+var VERSAO = "ploion-0eacdae5dd";
 var ARQUIVOS = [
   "./",
   "app.js",

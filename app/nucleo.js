@@ -422,14 +422,26 @@
     var k = chaveGrega(p);
     return k ? this._linhas(k) : [];
   };
+  var ORDEM_ROTULOS = Object.keys(ROTULO_FLEXAO);
   Flexoes.prototype.descrever = function (ids, tr) {
-    var self = this, vistos = new Set(), saida = [];
+    tr = tr || function (t) { return t; };
+    var self = this, conj = [], vistos = new Set();
     String(ids).split(",").forEach(function (i) {
       if (!/^\d+$/.test(i) || +i >= self.analises.length) return;
-      var t = descreverAnalise(self.analises[+i], tr);
-      if (t && !vistos.has(t)) { vistos.add(t); saida.push(t); }
+      var c = [];
+      self.analises[+i].split(" ").forEach(function (t) {
+        if (ROTULO_FLEXAO.hasOwnProperty(t) && c.indexOf(t) < 0) c.push(t);
+      });
+      c.sort(function (a, b) { return ORDEM_ROTULOS.indexOf(a) - ORDEM_ROTULOS.indexOf(b); });
+      var chave = c.join(" ");
+      if (c.length && !vistos.has(chave)) { vistos.add(chave); conj.push(c); }
     });
-    return saida.join(" / ");
+    var contido = function (a, b) {  // a ⊂ b (estrito)
+      return a.length < b.length && a.every(function (t) { return b.indexOf(t) >= 0; });
+    };
+    return conj.filter(function (c) { return !conj.some(function (o) { return contido(c, o); }); })
+      .map(function (c) { return c.map(function (t) { return tr(ROTULO_FLEXAO[t]); }).join(" "); })
+      .join(" / ");
   };
   function ordemFonte(v) {
     var f = v.fonte || "";
