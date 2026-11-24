@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var N = window.PloionNucleo;
-  var VERSAO = "2.7";
+  var VERSAO = "2.7.1";
   var IDIOMAS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["fr", "Français"],
     ["de", "Deutsch"], ["it", "Italiano"], ["ru", "Русский"], ["zh", "中文"], ["ar", "العربية"],
     ["el", "Ελληνικά"], ["ja", "日本語"], ["ko", "한국어"]];
@@ -661,12 +661,13 @@
   }
 
   function carregarFlexoes() {  // arquivo opcional: sem ele, o app funciona como antes
-    fetch("dados/formas_flexionadas.json").then(function (r) {
+    fetch("dados/formas_flexionadas.txt").then(function (r) {
       if (!r.ok) throw new Error(r.status);
-      return r.json();
-    }).then(function (d) {
-      if (!d || !d.lemas || !d.lemas.length) return;  // arquivo vazio: ainda não gerado
-      flexoes = new N.Flexoes(d);
+      return r.text();
+    }).then(function (t) {
+      var f = new N.Flexoes(t);
+      if (!f.tamanho()) return;  // arquivo vazio: ainda não gerado
+      flexoes = f;
       if (dic) dic.flexoes = flexoes;
       $("credito-formas").hidden = false;
       aoMudar();

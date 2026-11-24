@@ -20,7 +20,7 @@ O arquivo dicionario_grego.json reúne três fontes:
 As traduções para o português dos verbetes do Middle Liddell foram feitas para o
 Ploion e seguem a licença do original (CC BY-SA 3.0).
 
-Formas flexionadas (arquivo formas_flexionadas.json, quando presente): tiradas do
+Formas flexionadas (arquivo formas_flexionadas.txt, quando presente): tiradas do
 Wiktionary em inglês (https://en.wiktionary.org), por meio dos dados extraídos pelo
 Wiktextract (https://kaikki.org). Licença: Creative Commons
 Atribuição-CompartilhaIgual 4.0 (CC BY-SA 4.0). O arquivo é gerado por

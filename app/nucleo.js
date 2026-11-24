@@ -370,24 +370,58 @@
     return etiquetas.split(" ").filter(function (t) { return ROTULO_FLEXAO.hasOwnProperty(t); })
       .map(function (t) { return tr(ROTULO_FLEXAO[t]); }).join(" ");
   }
-  function Flexoes(dados) {
-    var ok = dados && typeof dados === "object";
-    this.analises = ok && Array.isArray(dados.analises) ? dados.analises.slice() : [];
-    var exato = this._exato = new Map(), chave = this._chave = new Map();
-    ((ok && dados.lemas) || []).forEach(function (item) {
-      if (!Array.isArray(item) || item.length < 2) return;
-      var lema = item[0];
-      for (var i = 1; i < item.length; i++) {
-        var txt = String(item[i]), b = txt.indexOf("|");
-        var reg = [b < 0 ? txt : txt.slice(0, b), lema, b < 0 ? "" : txt.slice(b + 1)];
-        var l = exato.get(reg[0]); if (l) l.push(reg); else exato.set(reg[0], [reg]);
-        var k = chaveGrega(reg[0]);
-        l = chave.get(k); if (l) l.push(reg); else chave.set(k, [reg]);
-      }
-    });
+  // Mesmo formato de formas_flexionadas.txt do programa (veja texto_flexoes em ploion.py):
+  // 1ª linha JSON; depois "forma<TAB>i:ids;i:ids", ordenadas pela chave sem acentos.
+  function Flexoes(texto) {
+    texto = String(texto || "");
+    var nl = texto.indexOf("\n"), cab = nl < 0 ? texto : texto.slice(0, nl), c = {};
+    try { c = JSON.parse(cab) || {}; } catch (e) { c = {}; }
+    if (typeof c !== "object") c = {};
+    this.analises = Array.isArray(c.analises) ? c.analises.slice() : [];
+    this._lemas = Array.isArray(c.lemas) ? c.lemas.slice() : [];
+    var corpo = this._texto = nl < 0 ? "" : texto.slice(nl + 1);
+    var inicios = [], p = 0, n = corpo.length;
+    while (p < n) {
+      inicios.push(p);
+      var q = corpo.indexOf("\n", p);
+      if (q < 0) break;
+      p = q + 1;
+    }
+    this._inicios = Uint32Array.from(inicios);
   }
-  Flexoes.prototype.exatas = function (p) { return this._exato.get(chaveFlexao(p)) || []; };
-  Flexoes.prototype.semAcentos = function (p) { return this._chave.get(chaveGrega(p)) || []; };
+  Flexoes.prototype.tamanho = function () { return this._inicios.length; };
+  Flexoes.prototype._chaveEm = function (i) {
+    var p = this._inicios[i];
+    return chaveGrega(this._texto.slice(p, this._texto.indexOf("\t", p)));
+  };
+  Flexoes.prototype._linhas = function (k) {
+    var lo = 0, hi = this._inicios.length, saida = [];
+    while (lo < hi) {
+      var m = (lo + hi) >> 1;
+      if (this._chaveEm(m) < k) lo = m + 1; else hi = m;
+    }
+    for (; lo < this._inicios.length; lo++) {
+      var p = this._inicios[lo], fim = this._texto.indexOf("\n", p);
+      var partes = this._texto.slice(p, fim < 0 ? undefined : fim).split("\t");
+      if (partes.length < 2 || chaveGrega(partes[0]) !== k) break;
+      var regs = partes[1].split(";");
+      for (var j = 0; j < regs.length; j++) {
+        var d = regs[j].indexOf(":"), i = d < 0 ? regs[j] : regs[j].slice(0, d);
+        if (/^\d+$/.test(i) && +i < this._lemas.length)
+          saida.push([partes[0], this._lemas[+i], d < 0 ? "" : regs[j].slice(d + 1)]);
+      }
+    }
+    return saida;
+  };
+  Flexoes.prototype.exatas = function (p) {
+    var f = chaveFlexao(p);
+    if (!f) return [];
+    return this._linhas(chaveGrega(f)).filter(function (r) { return r[0] === f; });
+  };
+  Flexoes.prototype.semAcentos = function (p) {
+    var k = chaveGrega(p);
+    return k ? this._linhas(k) : [];
+  };
   Flexoes.prototype.descrever = function (ids, tr) {
     var self = this, vistos = new Set(), saida = [];
     String(ids).split(",").forEach(function (i) {
