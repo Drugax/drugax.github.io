@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var N = window.PloionNucleo;
-  var VERSAO = "2.7.1";
+  var VERSAO = "2.7.2";
   var IDIOMAS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["fr", "Français"],
     ["de", "Deutsch"], ["it", "Italiano"], ["ru", "Русский"], ["zh", "中文"], ["ar", "العربية"],
     ["el", "Ελληνικά"], ["ja", "日本語"], ["ko", "한국어"]];
@@ -361,7 +361,7 @@
       else if (o.verbete) {
         var an = dic.analise(o.grego, o.verbete, _);
         sp.className = "pal"; sp.title = o.grego + (an ? " → " + o.verbete.lema + ": " + an : "");
-        sp.onclick = function () { abrirVerbete(o.verbete); };
+        sp.onclick = function () { abrirVerbete(o.verbete, o.grego); };
       }
       else sp.className = "desc";
       g.appendChild(sp);
@@ -378,14 +378,14 @@
     for (var i = 0; i < pals.length; i++) if (pals[i][0] <= pos && pos <= pals[i][1]) return pals[i][2];
     return "";
   }
-  var rapidoVerbete = null;
+  var rapidoVerbete = null, rapidoPalavra = "";
   function atualizarRapido() {
     if (!dic) return;
     var p = ta.selectionStart === ta.selectionEnd ? palavraNoCursor() : "";
     var v = p && N.temGrego(p) ? dic.glosar(p) : null;
     var r = $("rapido");
     if (!v) { r.hidden = true; rapidoVerbete = null; return; }
-    rapidoVerbete = v;
+    rapidoVerbete = v; rapidoPalavra = p;
     r.querySelector(".r-lema").textContent = v.lema;
     r.querySelector(".r-translit").textContent = N.transliterar(v.lema);
     var an = N.chaveGrega(p) !== N.chaveGrega(v.lema) ? dic.analise(p, v, _) : "";
@@ -394,7 +394,7 @@
   }
   ["click", "keyup", "select"].forEach(function (ev) { ta.addEventListener(ev, atualizarRapido); });
   document.addEventListener("selectionchange", function () { if (document.activeElement === ta) atualizarRapido(); });
-  $("b-rapido-ver").onclick = function () { if (rapidoVerbete) abrirVerbete(rapidoVerbete); };
+  $("b-rapido-ver").onclick = function () { if (rapidoVerbete) abrirVerbete(rapidoVerbete, rapidoPalavra); };
 
   function mostrarAba(nome) {
     cfg.aba = nome; salvarCfg();
@@ -424,7 +424,7 @@
       r.sugestoes.forEach(function (v) { lista.appendChild(itemLista(v, "")); });
     }
     var primeiro = r.resultados.length ? r.resultados[0][0] : null;
-    if (primeiro) mostrarVerbete(primeiro);
+    if (primeiro) mostrarVerbete(primeiro, q);
   }
   function itemLista(v, nota) {
     var li = document.createElement("li");
@@ -438,11 +438,11 @@
     }
     sm.textContent = pre + v.significados[0];
     li.appendChild(sm);
-    li.onclick = function () { mostrarVerbete(v); };
+    li.onclick = function () { mostrarVerbete(v, $("busca").value); };
     li._v = v;
     return li;
   }
-  function mostrarVerbete(v) {
+  function mostrarVerbete(v, consulta) {
     selecionado = v;
     $("b-editar").disabled = false;
     document.querySelectorAll("#resultados li").forEach(function (li) { li.classList.toggle("sel", li._v === v); });
@@ -453,17 +453,29 @@
     if (v.gram) { var g = document.createElement("span"); g.className = "gram"; g.textContent = ", " + v.gram; cab.appendChild(g); }
     if (N.ehMeu(v)) { var m = document.createElement("span"); m.className = "meu"; m.textContent = "meu"; cab.appendChild(m); }
     el("div", "info", v.classe + "  ·  " + N.transliterar(v.lema));
+    // forma flexionada que trouxe até aqui (ἐποίησεν -> ποιέω), com a análise
+    var c = (consulta || "").trim();
+    var an = c && N.temGrego(c) && N.chaveGrega(c) !== N.chaveGrega(v.lema) ? dic.analise(c, v, _) : "";
+    if (an) {
+      var pf = el("p", "consultada"), rf = document.createElement("span");
+      rf.className = "rot"; rf.textContent = _("Forma consultada:") + " "; pf.appendChild(rf);
+      var gf = document.createElement("span"); gf.className = "grego"; gf.textContent = c; pf.appendChild(gf);
+      pf.appendChild(document.createTextNode(" — " + an));
+    }
     var ol = el("ol"); v.significados.forEach(function (s) { var li = document.createElement("li"); li.textContent = s; ol.appendChild(li); });
     if (v.exemplo) { var p = el("p"); p.innerHTML = ""; var r = document.createElement("span"); r.className = "rot"; r.textContent = _("\nExemplo: ").trim() + " "; p.appendChild(r); var gg = document.createElement("span"); gg.className = "grego"; gg.textContent = v.exemplo; p.appendChild(gg); }
     if (v.formas && v.formas.length) { var p2 = el("p"); var r2 = document.createElement("span"); r2.className = "rot"; r2.textContent = _("\nFormas que levam a este verbete: ").trim() + " "; p2.appendChild(r2); var g2 = document.createElement("span"); g2.className = "grego"; g2.textContent = v.formas.join(", "); p2.appendChild(g2); }
     if (v.em_ingles) el("div", "fonte", _("\nSignificados em inglês (tradução em andamento).").trim());
     el("div", "fonte", fmt(_("\nFonte: {fonte}"), { fonte: v.fonte }).trim());
   }
-  function abrirVerbete(v) {
+  function abrirVerbete(v, forma) {
+    // aberto a partir de uma forma (ἐποίησεν): busca a própria forma, para a lista e o
+    // verbete mostrarem de onde veio; senão, busca o lema
     mostrarAba("dicionario");
-    $("busca").value = v.lema;
+    var f = forma && N.chaveGrega(forma) !== N.chaveGrega(v.lema) && dic.analise(forma, v, _) ? forma : v.lema;
+    $("busca").value = f;
     buscar();
-    mostrarVerbete(v);
+    mostrarVerbete(v, f);
   }
   var tempoBusca = null;
   $("busca").addEventListener("input", function () { clearTimeout(tempoBusca); tempoBusca = setTimeout(buscar, 120); });

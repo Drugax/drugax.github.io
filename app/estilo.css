@@ -186,3 +186,6 @@ dialog::backdrop { background: rgba(10,20,32,.55); }
   .tecla.diac { height: 36px; }
 }
 @media (prefers-reduced-motion: reduce) { .coracao { animation: none; } }
+
+/* forma flexionada consultada (ἐποίησεν -> ποιέω) */
+#verbete .consultada { background: var(--diac); border-left: 3px solid var(--ouro); border-radius: 6px; padding: .35em .6em; margin: .5em 0; }
