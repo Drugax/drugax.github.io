@@ -1,6 +1,6 @@
 /* Ploion — service worker: guarda o app no aparelho para funcionar sem internet.
    A versão muda sozinha quando qualquer arquivo muda (gerada por montar_sw.py). */
-var VERSAO = "ploion-cedc27b085";
+var VERSAO = "ploion-9f864339de";
 var ARQUIVOS = [
   "./",
   "app.js",
@@ -56,8 +56,8 @@ self.addEventListener("activate", function (e) {
   }).then(function () { return self.clients.claim(); }));
 });
 self.addEventListener("message", function (e) { if (e.data === "atualizar") self.skipWaiting(); });
-// formas_flexionadas.txt é grande e pode ser trocado sem nova versão do app: fica num
-// cache próprio e é atualizado em segundo plano (mostra o guardado e revalida).
+// formas_flexionadas.txt e dicionario_<idioma>.json são grandes e podem ser trocados sem nova
+// versão do app: ficam num cache próprio (só o que foi usado) e são atualizados em segundo plano.
 var CACHE_FORMAS = "formas-ploion";
 function formasAtualizadas(req) {
   return fetch(req, { cache: "no-cache" }).then(function (r) {
@@ -67,7 +67,7 @@ function formasAtualizadas(req) {
 }
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
-  if (e.request.url.indexOf("formas_flexionadas.txt") >= 0) {
+  if (e.request.url.indexOf("formas_flexionadas.txt") >= 0 || e.request.url.indexOf("/idiomas/dicionario_") >= 0) {
     e.respondWith(caches.open(CACHE_FORMAS).then(function (c) {
       return c.match(e.request, { ignoreSearch: true }).then(function (guardado) {
         var rede = formasAtualizadas(e.request);

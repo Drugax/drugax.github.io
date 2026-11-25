@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var N = window.PloionNucleo;
-  var VERSAO = "2.7.2";
+  var VERSAO = "2.8";
   var IDIOMAS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["fr", "Français"],
     ["de", "Deutsch"], ["it", "Italiano"], ["ru", "Русский"], ["zh", "中文"], ["ar", "العربية"],
     ["el", "Ελληνικά"], ["ja", "日本語"], ["ko", "한국어"]];
@@ -62,8 +62,18 @@
   }
   function carregarIdioma(cod) {
     if (cod === "pt") { trad = { interface: {}, dados: {} }; return Promise.resolve(); }
+    // dicionario_<cod>.json: significados do dicionário grande traduzidos (só o do idioma escolhido
+    // é baixado); se não existir, esses significados aparecem no inglês original
+    // (o inglês não precisa: o original fica em significados_en)
+    var extra = cod === "en" ? Promise.resolve({}) : fetch("dados/idiomas/dicionario_" + cod + ".json")
+      .then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; });
     return fetch("dados/idiomas/" + cod + ".json").then(function (r) { return r.json(); })
-      .then(function (d) { trad = { interface: d.interface || {}, dados: d.dados || {} }; })
+      .then(function (d) {
+        trad = { interface: d.interface || {}, dados: d.dados || {} };
+        return extra.then(function (x) {
+          for (var k in x) if (typeof x[k] === "string" && x[k] && !trad.dados[k]) trad.dados[k] = x[k];
+        });
+      })
       .catch(function () { trad = { interface: {}, dados: {} }; });
   }
   function traduzirVerbete(v) {
