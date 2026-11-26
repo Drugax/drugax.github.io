@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var N = window.PloionNucleo;
-  var VERSAO = "2.8";
+  var VERSAO = "2.9";
   var IDIOMAS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["fr", "Français"],
     ["de", "Deutsch"], ["it", "Italiano"], ["ru", "Русский"], ["zh", "中文"], ["ar", "العربية"],
     ["el", "Ελληνικά"], ["ja", "日本語"], ["ko", "한국어"]];
@@ -83,7 +83,8 @@
       var en = v.significados_en || [], emIngles = !!v.traducao_pendente;
       n.significados = v.significados.map(function (s, i) {
         var t = td(s);
-        if (t === s && en.length && cod !== "pt" && i < en.length) { emIngles = true; return en[i]; }
+        // sem tradução (não "tradução igual ao português": santificar, inocente)
+        if (!trad.dados[s] && en.length && cod !== "pt" && i < en.length) { emIngles = true; return en[i]; }
         return t;
       });
       delete n.significados_en; delete n.traducao_pendente;
@@ -362,7 +363,7 @@
     else tl.textContent = t.split("\n").map(N.transliterar).join("\n");
     var g = $("saida-glosa"); g.textContent = "";
     if (!t.trim()) { g.appendChild(vazio()); return; }
-    N.glosaAproximada(t, dic, indice).forEach(function (par) {
+    N.glosaAproximada(t, dic, indice, _, td).forEach(function (par) {
       var s = par[0], o = par[1];
       if (!o) { g.appendChild(document.createTextNode(s)); return; }
       var sp = document.createElement("span");

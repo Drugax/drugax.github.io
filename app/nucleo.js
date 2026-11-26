@@ -326,6 +326,7 @@
       novo.formas = v.formas.map(function (f) { return nfc(String(f)); })
                             .filter(function (f) { return f.trim(); });
     if (v.em_ingles) novo.em_ingles = true;
+    if (typeof v.i_passiva === "number" && v.i_passiva % 1 === 0) novo.i_passiva = v.i_passiva;  // sentido da voz passiva
     return novo;
   }
   function ehMeu(v) { return (v.fonte || "").startsWith("meu"); }
@@ -483,7 +484,8 @@
     var q = nfc(consulta).trim(), achados = new Map(), kgs, kl, pt;
     function marcar(v, ordem, nota) {
       var at = achados.get(v);
-      if (!at || cmpTupla(ordem, at[0]) < 0) achados.set(v, [ordem, v, nota || ""]);
+      // o lema igual à consulta sobe, mas a análise da forma continua
+      if (!at || cmpTupla(ordem, at[0]) < 0) achados.set(v, [ordem, v, nota || (at ? at[2] : "")]);
     }
     if (temGrego(q)) { kgs = [chaveGrega(q)]; kl = ""; pt = this.idioma === "el" ? normalizarPt(q) : ""; }
     else { kgs = [chaveGrega(latimParaGrego(q))]; kl = chaveLatina(q); pt = normalizarPt(q); }
@@ -496,7 +498,8 @@
       var achadas = temGrego(q) ? this.flexionadas(q, true) : [];
       if (!achadas.length) achadas = this.flexionadas(kgs[0], false);
       achadas.slice(0, 12).forEach(function (a) {
-        marcar(a[0], [0, 0, 0], { forma: a[1], ids: a[2] });
+        // depois de um lema idêntico à consulta (ὅς relativo antes da forma homérica de ἑός)
+        marcar(a[0], [0, 0, 1000], { forma: a[1], ids: a[2] });
       });
     }
     this._idx.forEach(function (e) {
@@ -522,6 +525,7 @@
   }
   Dicionario.prototype.buscar = function (consulta, limite) {
     limite = limite || 200;
+    consulta = Array.from(consulta).slice(0, 80).join("");  // texto colado muito longo travaria a busca
     var p = this._pontuar(consulta), todos = Array.from(p.achados.values());
     var resultados = ordenarAchados(todos).slice(0, limite).map(function (x) { return [x[1], x[2]]; });
     var sugestoes = [];
@@ -540,10 +544,18 @@
   Dicionario.prototype.glosar = function (palavra) {
     var p = nfc(palavra).trim(), kg = chaveGrega(p);
     if (!kg) return null;
-    var mesmos = this._porGrega.get(kg) || [], i;
+    var mesmos = this._porGrega.get(kg) || [], formas = this._formas.get(kg) || [], i, j;
     for (i = 0; i < mesmos.length; i++)
-      if (mesmos[i].lema === p || mesmos[i].lema === p.toLowerCase()) return mesmos[i];
-    var formas = this._formas.get(kg) || [];
+      if (mesmos[i].lema === p || mesmos[i].lema === p.toLowerCase()) {
+        if (ordemFonte(mesmos[i]) > 0)  // lema raro: forma do vocabulário básico antes (τῷ = artigo)
+          for (j = 0; j < formas.length; j++) {
+            var fb = formas[j].formas || [];
+            if (ordemFonte(formas[j]) === 0 && (fb.indexOf(p) >= 0 || fb.indexOf(p.toLowerCase()) >= 0)) return formas[j];
+          }
+        return mesmos[i];
+      }
+    var kf = chaveFlexao(p);  // grave no lugar do agudo (ὃς -> ὅς), maiúscula, mácron
+    for (i = 0; i < mesmos.length; i++) if (chaveFlexao(mesmos[i].lema) === kf) return mesmos[i];
     for (i = 0; i < formas.length; i++) {
       var fs = formas[i].formas || [];
       if (fs.indexOf(p) >= 0 || fs.indexOf(p.toLowerCase()) >= 0) return formas[i];
@@ -740,7 +752,71 @@
     primeiro = primeiro.split(/\s+/).filter(Boolean).join(" ").replace(/^[ .]+|[ .]+$/g, "");
     return primeiro || sig.trim();
   }
-  function glosaAproximada(texto, dic, indice) {
+  // ---- caso e voz na tradução aproximada (igual a _glosa_flexionada em ploion.py)
+  var CASOS_GLOSA = ["nominative", "genitive", "dative", "accusative", "vocative"];
+  var PRONOMES_CASO = {
+    "ἐγώ": { genitive: "de mim", dative: "a mim", accusative: "me" },
+    "σύ": { genitive: "de ti", dative: "a ti", accusative: "te" },
+    "ἡμεῖς": { genitive: "de nós", dative: "a nós", accusative: "nos" },
+    "ὑμεῖς": { genitive: "de vós", dative: "a vós", accusative: "vos" }
+  };
+  var MODELO_CASO = { genitive: "de {}", dative: "a {}", vocative: "ó {}" };
+  var ARTIGO_NA_GRAM = /(?:^|[\s,;])(?:ὁ|ἡ|τό|οἱ|αἱ|τά)(?:$|[\s,;])/;
+  function idem(t) { return t; }
+  Dicionario.prototype.tracos = function (p, v) {
+    if (!this.flexoes || !v) return [null, null];
+    var ids = [], an = this.flexoes.analises;  // só formas idênticas (θεά não casa com θεᾷ)
+    this.flexionadas(p, true).forEach(function (x) {
+      if (x[0] === v) String(x[2]).split(",").forEach(function (i) { if (/^\d+$/.test(i)) ids.push(+i); });
+    });
+    var analises = ids.filter(function (i) { return i >= 0 && i < an.length; })
+      .map(function (i) { return an[i].split(/\s+/).filter(Boolean); });
+    if (!analises.length) return [null, null];
+    var casos = new Set(), ok = true;
+    analises.forEach(function (a) {
+      if (!ok) return;
+      var c = a.filter(function (t) { return CASOS_GLOSA.indexOf(t) >= 0; });
+      if (c.length !== 1 || a.indexOf("participle") >= 0 || a.indexOf("infinitive") >= 0) { ok = false; return; }
+      casos.add(c[0]);
+    });
+    var caso = ok && casos.size === 1 ? Array.from(casos)[0] : null;
+    var voz = analises.every(function (a) { return a.indexOf("passive") >= 0 || a.indexOf("mediopassive") >= 0; }) ? "passiva" : null;
+    return [caso, voz];
+  };
+  function tipoGlosa(v, td) {
+    var classe = v.classe || "", tipos = [["nome", "substantivo"], ["nome", "nome próprio"], ["pronome", "pronome"],
+      ["artigo", "artigo"], ["prep", "preposição"], ["verbo", "verbo"]];
+    for (var i = 0; i < tipos.length; i++)
+      if (classe === tipos[i][1] || classe === td(tipos[i][1])) return tipos[i][0];
+    if ((classe === "não informada" || classe === td("não informada")) && ARTIGO_NA_GRAM.test(v.gram || "")) return "nome";
+    return null;
+  }
+  function glosaFlexionada(dic, p, v, regente, tr, td) {
+    var sigs = v.significados && v.significados.length ? v.significados : [""];
+    var tipo = tipoGlosa(v, td), cv = ["nome", "pronome", "artigo", "verbo"].indexOf(tipo) >= 0 ? dic.tracos(p, v) : [null, null];
+    var caso = cv[0], voz = cv[1], glosa;
+    if (tipo === "verbo") {
+      if (voz && !/(μαι|μην)$/.test(v.lema)) {  // depoentes já têm sentido próprio
+        var i = v.i_passiva;
+        if (typeof i === "number" && i >= 0 && i < sigs.length) return [resumirSignificado(sigs[i]), null];
+        return [tr("{} (passiva)").split("{}").join(resumirSignificado(sigs[0])), null];
+      }
+      return [resumirSignificado(sigs[0]), null];
+    }
+    glosa = resumirSignificado(sigs[0]);
+    if (tipo === "prep") return [glosa, "prep"];
+    if (tipo !== "nome" && tipo !== "pronome" && tipo !== "artigo") return [glosa, tipo === null ? regente : null];
+    if (tipo === "pronome" && PRONOMES_CASO.hasOwnProperty(v.lema) && caso && PRONOMES_CASO[v.lema][caso]) {
+      if (regente === "prep") return [glosa, null];
+      return [tr(PRONOMES_CASO[v.lema][caso]), null];
+    }
+    if (!MODELO_CASO.hasOwnProperty(caso) || regente === "prep" || regente === caso)
+      return [glosa, tipo === "artigo" ? regente : null];
+    return [tr(MODELO_CASO[caso]).split("{}").join(glosa), tipo === "artigo" ? caso : null];
+  }
+
+  function glosaAproximada(texto, dic, indice, tr, td) {
+    tr = tr || idem; td = td || idem;
     var unidades = [], exprs = indice ? acharExpressoes(texto, indice) : [];
     exprs.forEach(function (m) {
       var e = m.expressao;
@@ -748,11 +824,23 @@
                      { grego: texto.slice(m.inicio, m.fim), verbete: null, expressao: e }]);
     });
     var ocupado = exprs.map(function (m) { return [m.inicio, m.fim]; });
+    var fimExpr = exprs.map(function (m) { return m.fim; });
+    var regente = null;  // caso já marcado por artigo, ou "prep" depois de preposição
     palavrasComPosicao(texto).forEach(function (p) {
       if (ocupado.some(function (o) { return o[0] <= p[0] && p[0] < o[1]; })) return;
+      if (fimExpr.some(function (f) { return f <= p[0]; })) {
+        fimExpr = fimExpr.filter(function (f) { return f > p[0]; });
+        regente = null;
+      }
       var v = dic ? dic.glosar(p[2]) : null;
-      unidades.push([p[0], p[1], v ? resumirSignificado(v.significados[0]) : "[" + p[2] + "]",
-                     { grego: p[2], verbete: v, expressao: null }]);
+      if (!v) {
+        unidades.push([p[0], p[1], "[" + p[2] + "]", { grego: p[2], verbete: null, expressao: null }]);
+        regente = null;
+        return;
+      }
+      var r = glosaFlexionada(dic, p[2], v, regente, tr, td);
+      regente = r[1];
+      unidades.push([p[0], p[1], r[0], { grego: p[2], verbete: v, expressao: null }]);
     });
     unidades.sort(function (a, b) { return a[0] - b[0]; });
     var seg = [], pos = 0;
