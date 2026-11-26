@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var N = window.PloionNucleo;
-  var VERSAO = "2.9";
+  var VERSAO = "3.0";
   var IDIOMAS = [["pt", "Português"], ["en", "English"], ["es", "Español"], ["fr", "Français"],
     ["de", "Deutsch"], ["it", "Italiano"], ["ru", "Русский"], ["zh", "中文"], ["ar", "العربية"],
     ["el", "Ελληνικά"], ["ja", "日本語"], ["ko", "한국어"]];

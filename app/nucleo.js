@@ -761,6 +761,21 @@
     "ὑμεῖς": { genitive: "de vós", dative: "a vós", accusative: "vos" }
   };
   var MODELO_CASO = { genitive: "de {}", dative: "a {}", vocative: "ó {}" };
+  // αὐτός nos casos oblíquos: caso e gênero/número pela forma (depois de preposição, "ele")
+  var AUTOS_FORMAS = { "αὐτοῦ": ["genitive", 0], "αὐτῷ": ["dative", 0], "αὐτόν": ["accusative", 0],
+    "αὐτῆς": ["genitive", 1], "αὐτῇ": ["dative", 1], "αὐτήν": ["accusative", 1],
+    "αὐτῶν": ["genitive", 2], "αὐτοῖς": ["dative", 2], "αὐτούς": ["accusative", 2],
+    "αὐταῖς": ["dative", 3], "αὐτάς": ["accusative", 3] };
+  var AUTOS_CASO = { genitive: ["dele", "dela", "deles", "delas"],
+    dative: ["a ele", "a ela", "a eles", "a elas"], accusative: ["ele", "ela", "eles", "elas"] };
+  // contrações da glosa (iguais a REGRAS_CONTRACAO em ploion.py)
+  var REGRAS_CONTRACAO = "de o>do|a o>ao|de a>da|a a>à|de os>dos|a os>aos|de as>das|a as>às|" +
+    "em o>no|em a>na|em os>nos|em as>nas|por o>pelo|por a>pela|por os>pelos|por as>pelas";
+  var VOGAIS_ELISAO = "aeiouhàáâäãåæèéêëìíîïòóôöõøœùúûü";
+  var ARTIGOS_GLOSA = ["o", "a", "os", "as"];
+  var ARTIGO_FORMAS = { "ὁ": 0, "τοῦ": 0, "τῷ": 0, "τόν": 0, "τό": 0, "ἡ": 1, "τῆς": 1, "τῇ": 1, "τήν": 1,
+    "οἱ": 2, "τῶν": 2, "τοῖς": 2, "τούς": 2, "τά": 2, "αἱ": 3, "ταῖς": 3, "τάς": 3 };
+  function formaAguda(p) { return p.toLowerCase().normalize("NFD").replace(/\u0300/g, "\u0301").normalize("NFC"); }
   var ARTIGO_NA_GRAM = /(?:^|[\s,;])(?:ὁ|ἡ|τό|οἱ|αἱ|τά)(?:$|[\s,;])/;
   function idem(t) { return t; }
   Dicionario.prototype.tracos = function (p, v) {
@@ -793,6 +808,7 @@
   }
   function glosaFlexionada(dic, p, v, regente, tr, td) {
     var sigs = v.significados && v.significados.length ? v.significados : [""];
+    if (v.lema === "ὦ") return [resumirSignificado(sigs[0]), "vocative"];  // ὦ já é o "ó" do vocativo
     var tipo = tipoGlosa(v, td), cv = ["nome", "pronome", "artigo", "verbo"].indexOf(tipo) >= 0 ? dic.tracos(p, v) : [null, null];
     var caso = cv[0], voz = cv[1], glosa;
     if (tipo === "verbo") {
@@ -805,7 +821,15 @@
     }
     glosa = resumirSignificado(sigs[0]);
     if (tipo === "prep") return [glosa, "prep"];
+    var forma = formaAguda(p);
+    if (tipo === "artigo" && v.lema === "ὁ" && ARTIGO_FORMAS.hasOwnProperty(forma))
+      glosa = tr(ARTIGOS_GLOSA[ARTIGO_FORMAS[forma]]);
     if (tipo !== "nome" && tipo !== "pronome" && tipo !== "artigo") return [glosa, tipo === null ? regente : null];
+    if (tipo === "pronome" && v.lema === "αὐτός" && (regente === null || regente === "prep") &&
+        AUTOS_FORMAS.hasOwnProperty(forma)) {
+      var af = AUTOS_FORMAS[forma];
+      return [tr(AUTOS_CASO[regente === "prep" ? "accusative" : af[0]][af[1]]), null];
+    }
     if (tipo === "pronome" && PRONOMES_CASO.hasOwnProperty(v.lema) && caso && PRONOMES_CASO[v.lema][caso]) {
       if (regente === "prep") return [glosa, null];
       return [tr(PRONOMES_CASO[v.lema][caso]), null];
@@ -850,6 +874,58 @@
       pos = u[1];
     });
     if (pos < texto.length) seg.push([texto.slice(pos), null]);
+    return contrairGlosa(seg, tr);
+  }
+  function regrasContracao(tr) {
+    var regras = [];
+    tr(REGRAS_CONTRACAO).split("|").forEach(function (r) {
+      var k = r.indexOf(">");
+      if (k <= 0) return;
+      var antes = r.slice(0, k), depois = r.slice(k + 1), vogal = /\/V$/.test(depois);
+      regras.push([antes, vogal ? depois.slice(0, -2) : depois, vogal]);
+    });
+    return regras;
+  }
+  function ehVogal(c) { return !!c && VOGAIS_ELISAO.indexOf(c.toLowerCase()) >= 0; }
+  // aplica as contrações do idioma às glosas das palavras ("de o" -> "do"); igual a contrair_glosa
+  function contrairGlosa(seg, tr) {
+    var regras = regrasContracao(tr || idem);
+    if (!regras.length) return seg;
+    seg = seg.map(function (s) { return [s[0], s[1]]; });
+    seg.forEach(function (s, i) {
+      if (!s[1] || !s[1].verbete) return;
+      var prox = null;
+      if (i + 2 < seg.length && seg[i + 1][1] === null && seg[i + 1][0] === " " && seg[i + 2][1]) prox = seg[i + 2][0];
+      // preposição + artigo ("em" + "o" -> "no"): a contração fica na preposição
+      if (s[1].verbete.lema === "ὁ" && i >= 2 && seg[i - 1][1] === null && seg[i - 1][0] === " " &&
+          seg[i - 2][1] && seg[i - 2][0]) {
+        var junto = seg[i - 2][0] + " " + s[0], achou = null;
+        for (var k = 0; k < regras.length && !achou; k++)
+          if (!/ \*$/.test(regras[k][0]) && regras[k][0] === junto && (!regras[k][2] || (prox && ehVogal(prox[0]))))
+            achou = regras[k];
+        if (achou) {
+          seg[i - 2][0] = achou[1]; seg[i - 1][0] = ""; s[0] = "";
+          if (/'$/.test(achou[1]) && prox) seg[i + 1][0] = "";
+          return;
+        }
+      }
+      for (var j = 0; j < regras.length; j++) {
+        var antes = regras[j][0], depois = regras[j][1], vogal = regras[j][2];
+        if (/ \*$/.test(antes)) {
+          var pre = antes.slice(0, -1);
+          if (s[0].indexOf(pre) !== 0 || s[0].length <= pre.length) continue;
+          var resto = s[0].slice(pre.length);
+          if (vogal && !ehVogal(resto[0])) continue;
+          s[0] = depois.split("*").join(resto);
+          break;
+        }
+        if (s[0] !== antes) continue;
+        if (vogal && !(prox && ehVogal(prox[0]))) continue;
+        s[0] = depois;
+        if (/'$/.test(depois) && prox) seg[i + 1][0] = "";  // l' + amour = l'amour
+        break;
+      }
+    });
     return seg;
   }
 
